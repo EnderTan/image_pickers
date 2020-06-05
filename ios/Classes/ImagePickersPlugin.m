@@ -223,12 +223,11 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
             ac.sender = [UIApplication sharedApplication].delegate.window.rootViewController;
             [self colorChange:[dic objectForKey:@"uiColor"] configuration:ac.configuration];
             
+            NSMutableArray *arr =[[NSMutableArray alloc]init];
             [ac setCancleBlock:^{
                 result(arr);
                 return ;
             }];
-            
-            NSMutableArray *arr =[[NSMutableArray alloc]init];
             
             [ac setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
                 //your codes
