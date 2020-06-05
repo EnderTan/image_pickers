@@ -40,6 +40,7 @@ class ImagePickers {
     CameraMimeType cameraMimeType : CameraMimeType.photo,
     CropConfig cropConfig,
     int compressSize: 500,
+    int maxVideoDuration: 180,
   }) async {
     String mimeType = "photo";
     if(cameraMimeType == CameraMimeType.video){
@@ -60,6 +61,7 @@ class ImagePickers {
       'galleryMode': "image",
       'uiColor': {"a" : 255,"r" : uiColor.red,"g" : uiColor.green,"b" : uiColor.blue,"l" : (uiColor.computeLuminance() * 255).toInt()},
       'selectCount': 1,
+      'maxVideoDuration': maxVideoDuration,
       'showCamera': false,
       'enableCrop': enableCrop,
       'width': width,
@@ -103,6 +105,7 @@ class ImagePickers {
     GalleryMode galleryMode: GalleryMode.image,
     UIConfig uiConfig ,
     int selectCount: 1,
+    int maxVideoDuration: 180,
     bool showCamera: false,
     CropConfig cropConfig,
     int compressSize: 500,
@@ -131,6 +134,7 @@ class ImagePickers {
       'galleryMode': gMode,
       'uiColor': {"a" : 255,"r" : uiColor.red,"g" : uiColor.green,"b" : uiColor.blue,"l" : (uiColor.computeLuminance() * 255).toInt()},
       'selectCount': selectCount,
+      'maxVideoDuration': maxVideoDuration,
       'showCamera': showCamera,
       'enableCrop': enableCrop,
       'width': width,

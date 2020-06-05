@@ -75,6 +75,7 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
         
         NSInteger width =[[dic objectForKey:@"width"] integerValue];//宽高比例
         
+        NSInteger maxVideoDuration =[[dic objectForKey:@"maxVideoDuration"] integerValue];//视频最长长度
         
         BOOL showCamera =[[dic objectForKey:@"showCamera"] boolValue];//显示摄像头
         
@@ -82,6 +83,7 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
         
         ZLPhotoConfiguration *configuration =[ZLPhotoConfiguration defaultPhotoConfiguration];
         configuration.maxSelectCount = selectCount;//最多选择多少张图
+        configuration.maxVideoDuration = maxVideoDuration;
         configuration.allowMixSelect = NO;//不允许混合选择
         configuration.allowTakePhotoInLibrary =showCamera;//是否显示摄像头
         configuration.allowSelectOriginal =NO;//不选择原图
@@ -196,6 +198,7 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
             //                NSString *galleryMode =@"video";
             ZLPhotoActionSheet *ac = [[ZLPhotoActionSheet alloc] init];
             ac.configuration.maxSelectCount = selectCount;//最多选择多少张图
+            ac.configuration.maxVideoDuration = maxVideoDuration;
             ac.configuration.allowMixSelect = NO;//不允许混合选择
             ac.configuration.allowTakePhotoInLibrary =showCamera;//是否显示摄像头
             ac.configuration.allowSelectOriginal =NO;//不选择原图
@@ -219,6 +222,11 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
             //如调用的方法无sender参数，则该参数必传
             ac.sender = [UIApplication sharedApplication].delegate.window.rootViewController;
             [self colorChange:[dic objectForKey:@"uiColor"] configuration:ac.configuration];
+            
+            [ac setCancleBlock:^{
+                result(arr);
+                return ;
+            }];
             
             NSMutableArray *arr =[[NSMutableArray alloc]init];
             
@@ -272,6 +280,9 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
                     if (assets.count>0) {
                         [self saveImageView:0 imagePHAsset:assets arr:arr  compressSize:compressSize result:(FlutterResult)result];
                         
+                    } else {
+                        result(nil);
+                        return;
                     }
                     
                 }
