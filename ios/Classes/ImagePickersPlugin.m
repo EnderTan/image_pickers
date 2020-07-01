@@ -225,7 +225,7 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
             
             NSMutableArray *arr =[[NSMutableArray alloc]init];
             [ac setCancleBlock:^{
-                result(arr);
+                result(nil);
                 return ;
             }];
             
@@ -243,7 +243,10 @@ static NSString *const CHANNEL_NAME = @"flutter/image_pickers";
                         options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
                         PHImageManager *manager = [PHImageManager defaultManager];
                         [manager requestAVAssetForVideo:phAsset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-                            
+                            if (asset == nil) {
+                                result(arr);
+                                return;
+                            }
                             AVURLAsset *urlAsset = (AVURLAsset *)asset;
                             NSURL *url = urlAsset.URL;
                             NSString *subString = [url.absoluteString substringFromIndex:7];

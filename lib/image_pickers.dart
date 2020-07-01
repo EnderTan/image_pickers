@@ -144,6 +144,9 @@ class ImagePickers {
     final List<dynamic> paths =
         await _channel.invokeMethod('getPickerPaths', params);
     List<Media> medias = List();
+    if (paths == null) {
+      return null;
+    }
     paths.forEach((data) {
       Media media = Media();
       media.thumbPath = data["thumbPath"];
